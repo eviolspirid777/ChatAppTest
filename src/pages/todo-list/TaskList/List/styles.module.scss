@@ -1,0 +1,36 @@
+.task-item {
+  display: grid;
+  grid-template-columns: 1fr 4fr 1fr;
+  align-items: center;
+  justify-items: center;
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 0.25rem;
+  transition: all 0.2s ease;
+}
+
+.task-content {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  width: 100%;
+}
+
+.edit-icon {
+  color: #9ca3af;
+  opacity: 0;
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+
+  .task-item:hover & {
+    opacity: 1;
+  }
+}
+
+.delete-icon {
+  color: #ef4444;
+}
+
+.completed {
+  text-decoration: line-through;
+}
