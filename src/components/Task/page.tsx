@@ -1,7 +1,7 @@
 import { Checkbox, Input, Popconfirm } from "antd";
 import { FaPencilAlt, FaTrash } from "react-icons/fa";
 
-import styles from "./styles.module.scss";
+import styles from "./styles.module.css";
 import type { Task as TaskType } from "@/shared/types/Tasks/Tasks";
 import type { FC } from "react";
 
