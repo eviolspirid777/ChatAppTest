@@ -2,9 +2,19 @@ import type { FC } from "react";
 import type { Task } from "@/shared/types/Tasks/Tasks";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
+import { BsGripVertical } from "react-icons/bs";
 
-export const SortableItem: FC<{ task: Task; children: React.ReactNode }> = ({
+import styles from "./styles.module.css";
+
+type SortableItemProps = {
+  task: Task;
+  children: React.ReactNode;
+  isDisabled: boolean;
+};
+
+export const SortableItem: FC<SortableItemProps> = ({
   task,
+  isDisabled,
   children,
 }) => {
   const { attributes, listeners, setNodeRef, transform, transition } =
@@ -16,7 +26,19 @@ export const SortableItem: FC<{ task: Task; children: React.ReactNode }> = ({
   };
 
   return (
-    <li ref={setNodeRef} style={style} {...attributes} {...listeners}>
+    <li
+      className={`${styles["task-item"]} ${isDisabled && styles["disabled"]}`}
+      ref={setNodeRef}
+      style={style}
+    >
+      {!isDisabled && (
+        <BsGripVertical
+          className={styles["drag-handle"]}
+          size={20}
+          {...attributes}
+          {...listeners}
+        />
+      )}
       {children}
     </li>
   );

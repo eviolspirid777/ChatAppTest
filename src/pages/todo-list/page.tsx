@@ -11,6 +11,7 @@ import { TaskListPage } from "@/components/TaskList";
 import { AddNewTask } from "@/components/AddNewTask";
 import { useCallback, useEffect } from "react";
 import type { Task } from "@/shared/types/Tasks/Tasks";
+import type { ApplyTasksPayload } from "@/shared/types/Payloads/TaskPayload";
 
 export const TodoListPage = () => {
   const tasks = useSelector((state: RootState) => state.tasks);
@@ -19,7 +20,7 @@ export const TodoListPage = () => {
   useEffect(() => {
     const _tasks = localStorage.getItem("tasks");
     if (_tasks) {
-      dispatch(applyTasks(JSON.parse(_tasks) satisfies Task[]));
+      dispatch(applyTasks({tasks: JSON.parse(_tasks) satisfies Task[], filter: "all"}));
     }
   }, []);
 
@@ -39,12 +40,12 @@ export const TodoListPage = () => {
     dispatch(updateTaskText({ id, text }));
   };
 
-  const handleReorder = (tasks: Task[]) => {
-    dispatch(applyTasks(tasks));
+  const handleReorder = (data: ApplyTasksPayload) => {
+    dispatch(applyTasks(data));
   };
 
   return (
-    <div className="flex flex-col items-center justify-center gap-5">
+    <div className="flex flex-col items-center justify-center gap-5 mt-10">
       <h2 className="text-2xl font-bold underline mb-4">Todo List</h2>
       <AddNewTask onAddTask={handleAddTask} />
       <TaskListPage

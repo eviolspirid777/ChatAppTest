@@ -9,7 +9,7 @@ type TaskListPageProps = {
   handleUpdateTaskStatus: (id: number) => void;
   handleDeleteTask: (id: number) => void;
   handleUpdateTaskText: (id: number, text: string) => void;
-  handleReorder: (tasks: Task[]) => void;
+  handleReorder: ({tasks, filter}: {tasks: Task[], filter: FilterState}) => void;
 };
 
 export const TaskListPage: FC<TaskListPageProps> = ({
@@ -31,19 +31,24 @@ export const TaskListPage: FC<TaskListPageProps> = ({
         return task.status === "solved";
     }
   });
+  
+  const handleReorderMiddleware = (tasks: Task[]) => {
+    handleReorder({tasks, filter: currentFilter});
+  }
 
   return (
     <>
       <TaskList.Header
         filter={currentFilter}
-        onFilterStateChange={(state) => setCurrentFilter(state)}
+        onFilterStateChange={setCurrentFilter}
       />
       <TaskList.List
         tasks={filteredTasks}
+        filter={currentFilter}
         handleUpdateTaskStatus={handleUpdateTaskStatus}
         handleDeleteTask={handleDeleteTask}
         handleUpdateTaskText={handleUpdateTaskText}
-        handleReorder={handleReorder}
+        handleReorder={handleReorderMiddleware}
       />
     </>
   );

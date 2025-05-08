@@ -1,34 +1,31 @@
-import { Button, Input, type InputRef } from "antd";
-import { memo, useRef, type FC } from "react";
+import { Button, Input } from "antd";
+import { type FC, useState } from "react";
 
 type AddNewTaskProps = {
   onAddTask: (tag: string) => void;
 };
 
-export const AddNewTask: FC<AddNewTaskProps> = memo(
-  ({ onAddTask }) => {
-    const inputRef = useRef<InputRef>(null);
+export const AddNewTask: FC<AddNewTaskProps> = ({ onAddTask }) => {
+  const [inputValue, setInputValue] = useState("");
 
-    const addTask = () => {
-      const tag = inputRef.current?.input?.value;
-      if (tag) {
-        onAddTask(tag);
-        if (inputRef.current?.input) {
-          inputRef.current.input.value = "";
-        }
-      }
-    };
+  const addTask = () => {
+    const tag = inputValue;
+    if (tag) {
+      onAddTask(tag);
+      setInputValue("");
+    }
+  };
 
-    return (
-      <div className="flex flex-row gap-2">
-        <Input placeholder="Введите задачу" ref={inputRef} />
-        <Button type="primary" onClick={addTask}>
-          Добавить
-        </Button>
-      </div>
-    );
-  },
-  (prevProps, nextProps) => {
-    return prevProps.onAddTask === nextProps.onAddTask;
-  }
-);
+  return (
+    <div className="flex flex-row gap-2">
+      <Input
+        placeholder="Введите задачу"
+        value={inputValue}
+        onChange={(e) => setInputValue(e.target.value)}
+      />
+      <Button type="primary" onClick={addTask}>
+        Добавить
+      </Button>
+    </div>
+  );
+};

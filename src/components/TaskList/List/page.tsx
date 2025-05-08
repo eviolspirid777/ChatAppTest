@@ -14,7 +14,7 @@ import {
   sortableKeyboardCoordinates,
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
-import type { Task as TaskType } from "@/shared/types/Tasks/Tasks";
+import type { Task as TaskType, FilterState } from "@/shared/types/Tasks/Tasks";
 import { useState, type FC } from "react";
 
 import { SortableItem } from "@/shared/components/SortableItem";
@@ -22,6 +22,7 @@ import { Task } from "@/components/Task";
 
 type TaskListProps = {
   tasks: TaskType[];
+  filter: FilterState;
   handleUpdateTaskStatus: (id: number) => void;
   handleDeleteTask: (id: number) => void;
   handleUpdateTaskText: (id: number, text: string) => void;
@@ -30,6 +31,7 @@ type TaskListProps = {
 
 export const TaskList: FC<TaskListProps> = ({
   tasks,
+  filter,
   handleUpdateTaskStatus,
   handleDeleteTask,
   handleUpdateTaskText,
@@ -48,12 +50,6 @@ export const TaskList: FC<TaskListProps> = ({
 
   const [editingId, setEditingId] = useState<number | null>(null);
   const [editingText, setEditingText] = useState("");
-
-  const handleSpaceAdd = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.code === "Space") {
-      setEditingText((prev) => prev + " ");
-    }
-  };
 
   const handleEditClick = (task: TaskType) => {
     setEditingId(task.id);
@@ -77,8 +73,6 @@ export const TaskList: FC<TaskListProps> = ({
     }
   };
 
-  //TODO: перестает работать DnD после редактирования записи
-  //TODO: посмотри как можно эллегантнее зафиксить баг с тем, чтобы пробел можно было добавлять
   return (
     <ul className="relative flex flex-col gap-2 mt-2">
       <DndContext
@@ -90,9 +84,10 @@ export const TaskList: FC<TaskListProps> = ({
         <SortableContext
           items={tasks.map((task) => task.id)}
           strategy={verticalListSortingStrategy}
+          disabled={filter !== "all" || !!editingId}
         >
           {tasks.map((task) => (
-            <SortableItem key={task.id} task={task}>
+            <SortableItem key={task.id} task={task} isDisabled={filter !== "all" || !!editingId}>
               <Task
                 task={task}
                 editingId={editingId}
@@ -100,7 +95,6 @@ export const TaskList: FC<TaskListProps> = ({
                 handleDeleteTask={handleDeleteTask}
                 handleEditClick={handleEditClick}
                 handleSaveEdit={handleSaveEdit}
-                handleSpaceAdd={handleSpaceAdd}
                 handleUpdateTaskStatus={handleUpdateTaskStatus}
                 onEdittingTextChange={setEditingText}
               />

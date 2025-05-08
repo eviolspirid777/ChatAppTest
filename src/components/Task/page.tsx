@@ -1,9 +1,9 @@
 import { Checkbox, Input, Popconfirm } from "antd";
 import { FaPencilAlt, FaTrash } from "react-icons/fa";
-
-import styles from "./styles.module.css";
 import type { Task as TaskType } from "@/shared/types/Tasks/Tasks";
 import type { FC } from "react";
+
+import styles from "./styles.module.css";
 
 type TaskProps = {
   task: TaskType;
@@ -11,7 +11,6 @@ type TaskProps = {
   editingText: string;
   onEdittingTextChange: (value: string) => void;
   handleUpdateTaskStatus: (id: number) => void;
-  handleSpaceAdd: (e: React.KeyboardEvent<HTMLInputElement>) => void;
   handleSaveEdit: (id: number) => void;
   handleEditClick: (task: TaskType) => void;
   handleDeleteTask: (id: number) => void;
@@ -23,7 +22,6 @@ export const Task: FC<TaskProps> = ({
   editingText,
   onEdittingTextChange,
   handleUpdateTaskStatus,
-  handleSpaceAdd,
   handleSaveEdit,
   handleDeleteTask,
   handleEditClick,
@@ -38,7 +36,6 @@ export const Task: FC<TaskProps> = ({
         <Input
           value={editingText}
           onChange={(e) => onEdittingTextChange(e.target.value)}
-          onKeyDown={handleSpaceAdd}
           onPressEnter={handleSaveEdit.bind(null, task.id)}
           onBlur={handleSaveEdit.bind(null, task.id)}
           autoFocus
@@ -46,15 +43,17 @@ export const Task: FC<TaskProps> = ({
         />
       ) : (
         <div className={styles["task-content"]}>
-          <span className={task.status === "solved" ? styles["completed"] : ""}>
+          <span
+            className={`${
+              task.status === "solved" ? styles["completed"] : ""
+            } ${styles["task-tag"]}`}
+          >
             {task.tag}
           </span>
-          <div onClick={(e) => e.stopPropagation()}>
-            <FaPencilAlt
-              className={styles["edit-icon"]}
-              onClick={handleEditClick.bind(null, task)}
-            />
-          </div>
+          <FaPencilAlt
+            className={styles["edit-icon"]}
+            onClick={handleEditClick.bind(null, task)}
+          />
         </div>
       )}
       <Popconfirm

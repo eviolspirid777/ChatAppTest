@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import type { Task } from "@/shared/types/Tasks/Tasks";
+import type { ApplyTasksPayload } from "@/shared/types/Payloads/TaskPayload";
 
 type UpdateTaskStatusPayload = {
   id: number;
@@ -10,6 +11,7 @@ type UpdateTaskTextPayload = {
   id: number;
   text: string;
 };
+
 
 const initialTaskState: Task[] = [
   {
@@ -39,13 +41,13 @@ export const tasksSlice = createSlice({
   initialState: initialTaskState,
   reducers: {
     addTask: (state, action: PayloadAction<Omit<Task, "id">>) => {
-      const newId = Math.max(...state.map((task) => task.id)) + 1;
+      const newId = state.length;
       state.push({ ...action.payload, id: newId });
       localStorage.setItem("tasks", JSON.stringify(state));
     },
     deleteTask: (state, action: PayloadAction<number>) => {
       const result = state.filter((task) => task.id !== action.payload);
-      localStorage.setItem("tasks", JSON.stringify(state));
+      localStorage.setItem("tasks", JSON.stringify(result));
       return result;
     },
     updateTaskStatus: (
@@ -65,15 +67,18 @@ export const tasksSlice = createSlice({
         localStorage.setItem("tasks", JSON.stringify(state));
       }
     },
-    applyTasks: (_, action: PayloadAction<Task[]>) => {
-      const result = action.payload;
-      localStorage.setItem("tasks", JSON.stringify(result));
-      return result;
+    applyTasks: (previousState, action: PayloadAction<ApplyTasksPayload>) => {
+      console.log(action)
+      if(action.payload.filter === "all"){
+        const result = action.payload.tasks;
+        localStorage.setItem("tasks", JSON.stringify(result));
+        return result;
+      }
+      return previousState;
     },
   },
 });
 
-//TODO: тут можно рассмотреть вариант с добавлением withTypes(посмотри в своих проектах)
 export const {
   addTask,
   deleteTask,
