@@ -7,29 +7,25 @@ import {
   useSensors,
   type DragEndEvent,
 } from "@dnd-kit/core";
-import {
-  restrictToParentElement
-} from "@dnd-kit/modifiers"
+import { restrictToParentElement } from "@dnd-kit/modifiers";
 import {
   arrayMove,
   SortableContext,
   sortableKeyboardCoordinates,
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
-import { Checkbox, Input, Popconfirm } from "antd";
-import { FaPencilAlt, FaTrash } from "react-icons/fa";
-import type { Task } from "@/types/Tasks/Tasks";
+import type { Task as TaskType } from "@/types/Tasks/Tasks";
 import { useState, type FC } from "react";
 
-import styles from "./styles.module.scss";
-import { SortableItem } from "../../../shared/components/SortableItem";
+import { SortableItem } from "@/shared/components/SortableItem";
+import { Task } from "@/components/Task";
 
 type TaskListProps = {
-  tasks: Task[];
+  tasks: TaskType[];
   handleUpdateTaskStatus: (id: number) => void;
   handleDeleteTask: (id: number) => void;
   handleUpdateTaskText: (id: number, text: string) => void;
-  handleReorder: (tasks: Task[]) => void;
+  handleReorder: (tasks: TaskType[]) => void;
 };
 
 export const TaskList: FC<TaskListProps> = ({
@@ -59,7 +55,7 @@ export const TaskList: FC<TaskListProps> = ({
     }
   };
 
-  const handleEditClick = (task: Task) => {
+  const handleEditClick = (task: TaskType) => {
     setEditingId(task.id);
     setEditingText(task.tag);
   };
@@ -97,47 +93,17 @@ export const TaskList: FC<TaskListProps> = ({
         >
           {tasks.map((task) => (
             <SortableItem key={task.id} task={task}>
-              <div className={styles["task-item"]}>
-                <Checkbox
-                  checked={task.status === "solved"}
-                  onChange={handleUpdateTaskStatus.bind(null, task.id)}
-                />
-                {editingId === task.id ? (
-                  <Input
-                    value={editingText}
-                    onChange={(e) => setEditingText(e.target.value)}
-                    onKeyDown={handleSpaceAdd}
-                    onPressEnter={handleSaveEdit.bind(null, task.id)}
-                    onBlur={handleSaveEdit.bind(null, task.id)}
-                    autoFocus
-                    className="w-full"
-                  />
-                ) : (
-                  <div className={styles["task-content"]}>
-                    <span
-                      className={
-                        task.status === "solved" ? styles["completed"] : ""
-                      }
-                    >
-                      {task.tag}
-                    </span>
-                    <div onClick={(e) => e.stopPropagation()}>
-                      <FaPencilAlt
-                        className={styles["edit-icon"]}
-                        onClick={handleEditClick.bind(null, task)}
-                      />
-                    </div>
-                  </div>
-                )}
-                <Popconfirm
-                  title="Вы уверены, что хотите удалить задачу?"
-                  onConfirm={handleDeleteTask.bind(null, task.id)}
-                  okText="Да"
-                  cancelText="Нет"
-                >
-                  <FaTrash className={styles["delete-icon"]} />
-                </Popconfirm>
-              </div>
+              <Task
+                task={task}
+                editingId={editingId}
+                editingText={editingText}
+                handleDeleteTask={handleDeleteTask}
+                handleEditClick={handleEditClick}
+                handleSaveEdit={handleSaveEdit}
+                handleSpaceAdd={handleSpaceAdd}
+                handleUpdateTaskStatus={handleUpdateTaskStatus}
+                onEdittingTextChange={setEditingText}
+              />
             </SortableItem>
           ))}
         </SortableContext>
