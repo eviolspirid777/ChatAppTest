@@ -1,6 +1,6 @@
 import { Radio } from "antd";
 import { type FC } from "react";
-import type { FilterState } from "@/types/Tasks/Tasks";
+import type { FilterState } from "@/shared/types/Tasks/Tasks";
 
 type TaskListHeaderProps = {
   filter: FilterState;

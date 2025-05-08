@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
-import type { Task } from "@/types/Tasks/Tasks";
+import type { Task } from "@/shared/types/Tasks/Tasks";
 
 type UpdateTaskStatusPayload = {
   id: number;

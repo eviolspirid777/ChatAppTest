@@ -1,5 +1,5 @@
 import type { FC } from "react";
-import type { Task } from "../../types/Tasks/Tasks";
+import type { Task } from "@/shared/types/Tasks/Tasks";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 

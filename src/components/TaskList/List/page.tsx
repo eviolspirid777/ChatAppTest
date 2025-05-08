@@ -14,7 +14,7 @@ import {
   sortableKeyboardCoordinates,
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
-import type { Task as TaskType } from "@/types/Tasks/Tasks";
+import type { Task as TaskType } from "@/shared/types/Tasks/Tasks";
 import { useState, type FC } from "react";
 
 import { SortableItem } from "@/shared/components/SortableItem";

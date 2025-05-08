@@ -1,6 +1,6 @@
 import { useState } from "react";
 import type { FC } from "react";
-import type { FilterState, Task } from "@/types/Tasks/Tasks";
+import type { FilterState, Task } from "@/shared/types/Tasks/Tasks";
 
 import { TaskList } from "@/components/TaskList";
 

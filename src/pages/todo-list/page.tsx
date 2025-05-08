@@ -10,7 +10,7 @@ import {
 import { TaskListPage } from "@/components/TaskList";
 import { AddNewTask } from "@/components/AddNewTask";
 import { useCallback, useEffect } from "react";
-import type { Task } from "@/types/Tasks/Tasks";
+import type { Task } from "@/shared/types/Tasks/Tasks";
 
 export const TodoListPage = () => {
   const tasks = useSelector((state: RootState) => state.tasks);
