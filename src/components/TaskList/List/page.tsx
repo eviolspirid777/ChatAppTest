@@ -81,6 +81,8 @@ export const TaskList: FC<TaskListProps> = ({
     }
   };
 
+  //TODO: перестает работать DnD после редактирования записи
+  //TODO: посмотри как можно эллегантнее зафиксить баг с тем, чтобы пробел можно было добавлять
   return (
     <ul className="relative flex flex-col gap-2 mt-2">
       <DndContext

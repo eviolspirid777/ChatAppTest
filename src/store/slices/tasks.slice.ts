@@ -73,6 +73,7 @@ export const tasksSlice = createSlice({
   },
 });
 
+//TODO: тут можно рассмотреть вариант с добавлением withTypes(посмотри в своих проектах)
 export const {
   addTask,
   deleteTask,
