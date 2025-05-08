@@ -53,7 +53,7 @@ export const TaskList: FC<TaskListProps> = ({
 
   const handleEditClick = (task: TaskType) => {
     setEditingId(task.id);
-    setEditingText(task.tag);
+    setEditingText(task.title);
   };
 
   const handleSaveEdit = (id: number) => {

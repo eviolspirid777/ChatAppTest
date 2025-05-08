@@ -48,7 +48,7 @@ export const Task: FC<TaskProps> = ({
               task.status === "solved" ? styles["completed"] : ""
             } ${styles["task-tag"]}`}
           >
-            {task.tag}
+            {task.title}
           </span>
           <FaPencilAlt
             className={styles["edit-icon"]}

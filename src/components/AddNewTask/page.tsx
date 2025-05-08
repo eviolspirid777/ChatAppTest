@@ -2,16 +2,16 @@ import { Button, Input } from "antd";
 import { type FC, useState } from "react";
 
 type AddNewTaskProps = {
-  onAddTask: (tag: string) => void;
+  onAddTask: (title: string) => void;
 };
 
 export const AddNewTask: FC<AddNewTaskProps> = ({ onAddTask }) => {
   const [inputValue, setInputValue] = useState("");
 
   const addTask = () => {
-    const tag = inputValue;
-    if (tag) {
-      onAddTask(tag);
+    const title = inputValue;
+    if (title.trim()) {
+      onAddTask(title);
       setInputValue("");
     }
   };
