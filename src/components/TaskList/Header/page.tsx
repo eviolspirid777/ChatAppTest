@@ -19,8 +19,8 @@ export const TaskListHeader: FC<TaskListHeaderProps> = ({
         buttonStyle="solid"
       >
         <Radio.Button value="all">Все</Radio.Button>
-        <Radio.Button value="pending">Активные</Radio.Button>
-        <Radio.Button value="solved">Завершенные</Radio.Button>
+        <Radio.Button value="pending">Выполненные </Radio.Button>
+        <Radio.Button value="solved">Невыполненные</Radio.Button>
       </Radio.Group>
     </div>
   );
