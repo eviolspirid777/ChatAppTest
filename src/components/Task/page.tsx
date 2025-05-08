@@ -1,21 +1,21 @@
 import { Checkbox, Input, Popconfirm } from "antd";
 import { FaPencilAlt, FaTrash } from "react-icons/fa";
 
-import styles from "./styles.module.scss"
+import styles from "./styles.module.scss";
 import type { Task as TaskType } from "@/shared/types/Tasks/Tasks";
 import type { FC } from "react";
 
 type TaskProps = {
-  task: TaskType,
-  editingId: number | null,
-  editingText: string,
-  onEdittingTextChange: (value: string) => void,
-  handleUpdateTaskStatus: (id: number) => void,
-  handleSpaceAdd: (e: React.KeyboardEvent<HTMLInputElement>) => void,
-  handleSaveEdit: (id: number) => void,
-  handleEditClick: (task: TaskType) => void,
-  handleDeleteTask: (id: number) => void,
-}
+  task: TaskType;
+  editingId: number | null;
+  editingText: string;
+  onEdittingTextChange: (value: string) => void;
+  handleUpdateTaskStatus: (id: number) => void;
+  handleSpaceAdd: (e: React.KeyboardEvent<HTMLInputElement>) => void;
+  handleSaveEdit: (id: number) => void;
+  handleEditClick: (task: TaskType) => void;
+  handleDeleteTask: (id: number) => void;
+};
 
 export const Task: FC<TaskProps> = ({
   task,

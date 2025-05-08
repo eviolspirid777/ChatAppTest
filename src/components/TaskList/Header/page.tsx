@@ -12,7 +12,7 @@ export const TaskListHeader: FC<TaskListHeaderProps> = ({
   filter,
 }) => {
   return (
-    <div >
+    <div>
       <Radio.Group
         value={filter}
         onChange={(e) => onFilterStateChange?.(e.target.value)}

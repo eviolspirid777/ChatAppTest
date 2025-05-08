@@ -1,1 +1,1 @@
-export {SortableItem} from "./page"
+export { SortableItem } from "./page";

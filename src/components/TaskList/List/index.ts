@@ -1,1 +1,1 @@
-export {TaskList} from "./page"
+export { TaskList } from "./page";

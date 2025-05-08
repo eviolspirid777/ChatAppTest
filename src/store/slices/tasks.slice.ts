@@ -44,7 +44,7 @@ export const tasksSlice = createSlice({
       localStorage.setItem("tasks", JSON.stringify(state));
     },
     deleteTask: (state, action: PayloadAction<number>) => {
-      const result = state.filter((task) => task.id !== action.payload)
+      const result = state.filter((task) => task.id !== action.payload);
       localStorage.setItem("tasks", JSON.stringify(state));
       return result;
     },
