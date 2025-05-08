@@ -1,20 +1,27 @@
 import { useSelector, useDispatch } from "react-redux";
-import type { RootState } from "../../store/store";
+import type { RootState } from "@/store/store";
 import {
   addTask,
   updateTaskStatus,
   deleteTask,
   updateTaskText,
-  reorderTasks,
-} from "../../store/slices/tasks.slice";
-import { TaskListContainer } from "./TaskList";
-import { AddNewTask } from "./AddNewTask";
-import { useCallback } from "react";
-import type { Task } from "../../types/Tasks/Tasks";
+  applyTasks,
+} from "@/store/slices/tasks.slice";
+import { TaskListPage } from "@/components/TaskList";
+import { AddNewTask } from "@/components/AddNewTask";
+import { useCallback, useEffect } from "react";
+import type { Task } from "@/types/Tasks/Tasks";
 
 export const TodoListPage = () => {
   const tasks = useSelector((state: RootState) => state.tasks);
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    const _tasks = localStorage.getItem("tasks");
+    if (_tasks) {
+      dispatch(applyTasks(JSON.parse(_tasks) satisfies Task[]));
+    }
+  }, []);
 
   const handleAddTask = useCallback((tag: string) => {
     dispatch(addTask({ tag, status: "pending" }));
@@ -33,14 +40,14 @@ export const TodoListPage = () => {
   };
 
   const handleReorder = (tasks: Task[]) => {
-    dispatch(reorderTasks(tasks));
+    dispatch(applyTasks(tasks));
   };
 
   return (
     <div className="flex flex-col items-center justify-center gap-5">
       <h2 className="text-2xl font-bold underline mb-4">Todo List</h2>
       <AddNewTask onAddTask={handleAddTask} />
-      <TaskListContainer
+      <TaskListPage
         tasks={tasks}
         handleUpdateTaskStatus={handleUpdateTaskStatus}
         handleDeleteTask={handleDeleteTask}

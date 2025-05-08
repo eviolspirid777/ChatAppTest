@@ -5,3 +5,5 @@ export type Task = {
   tag: string,
   status: TaskStatus
 }
+
+export type FilterState = "all" | "pending" | "solved"

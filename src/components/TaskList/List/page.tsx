@@ -1,18 +1,28 @@
-import { closestCenter, DndContext, KeyboardSensor, PointerSensor, useSensor, useSensors, type DragEndEvent } from "@dnd-kit/core";
+import {
+  closestCenter,
+  DndContext,
+  KeyboardSensor,
+  PointerSensor,
+  useSensor,
+  useSensors,
+  type DragEndEvent,
+} from "@dnd-kit/core";
+import {
+  restrictToParentElement
+} from "@dnd-kit/modifiers"
 import {
   arrayMove,
   SortableContext,
   sortableKeyboardCoordinates,
-  useSortable,
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
 import { Checkbox, Input, Popconfirm } from "antd";
 import { FaPencilAlt, FaTrash } from "react-icons/fa";
-import type { Task } from "../../../../types/Tasks/Tasks";
+import type { Task } from "@/types/Tasks/Tasks";
 import { useState, type FC } from "react";
-import { CSS } from "@dnd-kit/utilities";
 
 import styles from "./styles.module.scss";
+import { SortableItem } from "../../../shared/components/SortableItem";
 
 type TaskListProps = {
   tasks: Task[];
@@ -20,25 +30,6 @@ type TaskListProps = {
   handleDeleteTask: (id: number) => void;
   handleUpdateTaskText: (id: number, text: string) => void;
   handleReorder: (tasks: Task[]) => void;
-};
-
-const SortableItem: FC<{ task: Task; children: React.ReactNode }> = ({
-  task,
-  children,
-}) => {
-  const { attributes, listeners, setNodeRef, transform, transition } =
-    useSortable({ id: task.id });
-
-  const style = {
-    transform: CSS.Transform.toString(transform),
-    transition,
-  };
-
-  return (
-    <li ref={setNodeRef} style={style} {...attributes} {...listeners}>
-      {children}
-    </li>
-  );
 };
 
 export const TaskList: FC<TaskListProps> = ({
@@ -61,7 +52,13 @@ export const TaskList: FC<TaskListProps> = ({
 
   const [editingId, setEditingId] = useState<number | null>(null);
   const [editingText, setEditingText] = useState("");
-  
+
+  const handleSpaceAdd = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.code === "Space") {
+      setEditingText((prev) => prev + " ");
+    }
+  };
+
   const handleEditClick = (task: Task) => {
     setEditingId(task.id);
     setEditingText(task.tag);
@@ -85,11 +82,12 @@ export const TaskList: FC<TaskListProps> = ({
   };
 
   return (
-    <ul className="flex flex-col gap-2 mt-2">
+    <ul className="relative flex flex-col gap-2 mt-2">
       <DndContext
         sensors={sensors}
         collisionDetection={closestCenter}
         onDragEnd={handleDragEnd}
+        modifiers={[restrictToParentElement]}
       >
         <SortableContext
           items={tasks.map((task) => task.id)}
@@ -106,6 +104,7 @@ export const TaskList: FC<TaskListProps> = ({
                   <Input
                     value={editingText}
                     onChange={(e) => setEditingText(e.target.value)}
+                    onKeyDown={handleSpaceAdd}
                     onPressEnter={handleSaveEdit.bind(null, task.id)}
                     onBlur={handleSaveEdit.bind(null, task.id)}
                     autoFocus
