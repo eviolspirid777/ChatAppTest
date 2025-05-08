@@ -12,15 +12,16 @@ import { AddNewTask } from "@/components/AddNewTask";
 import { useCallback, useEffect } from "react";
 import type { Task } from "@/shared/types/Tasks/Tasks";
 import type { ApplyTasksPayload } from "@/shared/types/Payloads/TaskPayload";
+import { tasksLocalStorage } from "@/shared/functions/TasksLocalStorage";
 
 export const TodoListPage = () => {
   const tasks = useSelector((state: RootState) => state.tasks);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    const _tasks = localStorage.getItem("tasks");
+    const _tasks = tasksLocalStorage.getTasks();
     if (_tasks) {
-      dispatch(applyTasks({tasks: JSON.parse(_tasks) satisfies Task[], filter: "all"}));
+      dispatch(applyTasks({ tasks: _tasks satisfies Task[], filter: "all" }));
     }
   }, []);
 

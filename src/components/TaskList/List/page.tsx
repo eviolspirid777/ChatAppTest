@@ -87,7 +87,11 @@ export const TaskList: FC<TaskListProps> = ({
           disabled={filter !== "all" || !!editingId}
         >
           {tasks.map((task) => (
-            <SortableItem key={task.id} task={task} isDisabled={filter !== "all" || !!editingId}>
+            <SortableItem
+              key={task.id}
+              task={task}
+              isDisabled={filter !== "all" || !!editingId}
+            >
               <Task
                 task={task}
                 editingId={editingId}

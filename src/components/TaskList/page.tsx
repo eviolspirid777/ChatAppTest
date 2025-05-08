@@ -9,7 +9,13 @@ type TaskListPageProps = {
   handleUpdateTaskStatus: (id: number) => void;
   handleDeleteTask: (id: number) => void;
   handleUpdateTaskText: (id: number, text: string) => void;
-  handleReorder: ({tasks, filter}: {tasks: Task[], filter: FilterState}) => void;
+  handleReorder: ({
+    tasks,
+    filter,
+  }: {
+    tasks: Task[];
+    filter: FilterState;
+  }) => void;
 };
 
 export const TaskListPage: FC<TaskListPageProps> = ({
@@ -31,10 +37,10 @@ export const TaskListPage: FC<TaskListPageProps> = ({
         return task.status === "solved";
     }
   });
-  
+
   const handleReorderMiddleware = (tasks: Task[]) => {
-    handleReorder({tasks, filter: currentFilter});
-  }
+    handleReorder({ tasks, filter: currentFilter });
+  };
 
   return (
     <>
