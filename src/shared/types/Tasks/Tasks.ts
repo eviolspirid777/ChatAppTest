@@ -1,7 +1,7 @@
 type TaskStatus = "solved" | "pending";
 
 export type Task = {
-  id: number;
+  id: string;
   title: string;
   status: TaskStatus;
 };

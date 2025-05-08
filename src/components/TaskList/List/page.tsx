@@ -23,9 +23,9 @@ import { Task } from "@/components/Task";
 type TaskListProps = {
   tasks: TaskType[];
   filter: FilterState;
-  handleUpdateTaskStatus: (id: number) => void;
-  handleDeleteTask: (id: number) => void;
-  handleUpdateTaskText: (id: number, text: string) => void;
+  handleUpdateTaskStatus: (id: string) => void;
+  handleDeleteTask: (id: string) => void;
+  handleUpdateTaskText: (id: string, text: string) => void;
   handleReorder: (tasks: TaskType[]) => void;
 };
 
@@ -48,7 +48,7 @@ export const TaskList: FC<TaskListProps> = ({
     })
   );
 
-  const [editingId, setEditingId] = useState<number | null>(null);
+  const [editingId, setEditingId] = useState<string | null>(null);
   const [editingText, setEditingText] = useState("");
 
   const handleEditClick = (task: TaskType) => {
@@ -56,7 +56,7 @@ export const TaskList: FC<TaskListProps> = ({
     setEditingText(task.title);
   };
 
-  const handleSaveEdit = (id: number) => {
+  const handleSaveEdit = (id: string) => {
     handleUpdateTaskText(id, editingText);
     setEditingId(null);
   };

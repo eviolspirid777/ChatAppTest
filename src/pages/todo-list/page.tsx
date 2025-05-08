@@ -29,15 +29,15 @@ export const TodoListPage = () => {
     dispatch(addTask({ title, status: "pending" }));
   };
 
-  const handleUpdateTaskStatus = (id: number) => {
+  const handleUpdateTaskStatus = (id: string) => {
     dispatch(updateTaskStatus({ id }));
   };
 
-  const handleDeleteTask = (id: number) => {
+  const handleDeleteTask = (id: string) => {
     dispatch(deleteTask(id));
   };
 
-  const handleUpdateTaskText = (id: number, text: string) => {
+  const handleUpdateTaskText = (id: string, text: string) => {
     dispatch(updateTaskText({ id, text }));
   };
 

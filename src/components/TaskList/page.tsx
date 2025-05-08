@@ -6,9 +6,9 @@ import { TaskList } from "@/components/TaskList";
 
 type TaskListPageProps = {
   tasks: Task[];
-  handleUpdateTaskStatus: (id: number) => void;
-  handleDeleteTask: (id: number) => void;
-  handleUpdateTaskText: (id: number, text: string) => void;
+  handleUpdateTaskStatus: (id: string) => void;
+  handleDeleteTask: (id: string) => void;
+  handleUpdateTaskText: (id: string, text: string) => void;
   handleReorder: ({
     tasks,
     filter,

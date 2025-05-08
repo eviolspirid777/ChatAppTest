@@ -9,22 +9,22 @@ import type {
 
 const initialTaskState: Task[] = [
   {
-    id: 1,
+    id: "1",
     status: "pending",
     title: "Вынести мусор",
   },
   {
-    id: 2,
+    id: "2",
     status: "pending",
     title: "Выгулять собаку",
   },
   {
-    id: 3,
+    id: "3",
     status: "solved",
     title: "Поиграть в компьютер",
   },
   {
-    id: 4,
+    id: "4",
     status: "pending",
     title: "Приготовить покушать",
   },
@@ -35,10 +35,10 @@ export const tasksSlice = createSlice({
   initialState: initialTaskState,
   reducers: {
     addTask: (state, action: PayloadAction<Omit<Task, "id">>) => {
-      const newId = state.length;
+      const newId = crypto.randomUUID();
       state.push({ ...action.payload, id: newId });
     },
-    deleteTask: (state, action: PayloadAction<number>) => {
+    deleteTask: (state, action: PayloadAction<string>) => {
       const result = state.filter((task) => task.id !== action.payload);
       return result;
     },

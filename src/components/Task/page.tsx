@@ -7,13 +7,13 @@ import styles from "./styles.module.css";
 
 type TaskProps = {
   task: TaskType;
-  editingId: number | null;
+  editingId: string | null;
   editingText: string;
   onEdittingTextChange: (value: string) => void;
-  handleUpdateTaskStatus: (id: number) => void;
-  handleSaveEdit: (id: number) => void;
+  handleUpdateTaskStatus: (id: string) => void;
+  handleSaveEdit: (id: string) => void;
   handleEditClick: (task: TaskType) => void;
-  handleDeleteTask: (id: number) => void;
+  handleDeleteTask: (id: string) => void;
 };
 
 export const Task: FC<TaskProps> = ({

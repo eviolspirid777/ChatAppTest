@@ -7,9 +7,9 @@ export type ApplyTasksPayload = {
 
 export type AddTaskPayload = Omit<Task, "id">;
 export type UpdateTaskStatusPayload = {
-  id: number;
+  id: string;
 };
 export type UpdateTaskTextPayload = {
-  id: number;
+  id: string;
   text: string;
 };
